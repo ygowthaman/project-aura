@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Header from './components/Header/Header.jsx';
 import MainContent from './components/MainContent/MainContent.jsx';
@@ -5,10 +6,10 @@ import MainContent from './components/MainContent/MainContent.jsx';
 function App() {
   return (
     <div className="App">
-      <header className="w-full h-[50px] px-8 flex items-center">
+      <header>
         <Header />
       </header>
-      <section class="px-8">
+      <section>
         <MainContent />
       </section>
     </div>
