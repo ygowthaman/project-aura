@@ -14,7 +14,7 @@ public class ViewController {
      * This uses RequestMapping instead of GetMapping to handle all HTTP methods
      * and lets Spring Boot's default resource handling serve static files
      */
-    @RequestMapping(value = "/**/{path:[^.]*}")
+    @RequestMapping(value = "/")
     public String forward() {
         return "forward:/index.html";
     }
