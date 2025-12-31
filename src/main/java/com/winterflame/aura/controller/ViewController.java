@@ -1,20 +1,21 @@
 package com.winterflame.aura.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ViewController {
 
     /**
-     * Forward all requests to React's index.html except:
-     * - static resources (handled by Spring Boot automatically)
-     * - API endpoints (if you add them later)
-     * 
-     * This uses RequestMapping instead of GetMapping to handle all HTTP methods
-     * and lets Spring Boot's default resource handling serve static files
+     * Forward all GET requests to React's index.html except:
+     * - /api/** endpoints (handled by @RestController with /api prefix)
+     * - Static resources (handled by Spring Boot automatically)
+     *
+     * This catches all other routes and forwards to React's SPA for client-side routing
      */
-    @RequestMapping(value = "/")
+    @RequestMapping(value = "/**/{path:[^.]*}")
     public String forward() {
         return "forward:/index.html";
     }
