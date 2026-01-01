@@ -11,3 +11,40 @@
   width: 100%;
   height: 100%;
 }
+
+.future-date {
+  border-radius: 50%;
+}
+
+.disposition-sad,
+.disposition-normal,
+.disposition-happy {
+  font-size: 50px;
+}
+
+.disposition-sad:hover {
+  background-color: transparent;
+  color: rgba(255, 98, 0, 0.633);
+}
+
+.disposition-normal:hover {
+  background-color: transparent;
+  color: rgba(255, 230, 0, 0.633);
+}
+
+.disposition-happy:hover {
+  background-color: transparent;
+  color: rgba(0, 128, 0, 0.633);
+}
+
+.disposition-sad {
+  color: rgb(255, 98, 0);
+}
+
+.disposition-normal {
+  color: rgb(255, 230, 0);
+}
+
+.disposition-happy {
+  color: green;
+}

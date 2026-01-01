@@ -2,7 +2,7 @@ import MonthlyCalendar from "../MonthlyCalendar/MonthlyCalendar";
 import "./MainContent.css";
 
 function MainContent() {
-  const years = [new Date().getFullYear()];
+  const years = [new Date().getFullYear(), 2026];
   const months = [
     { idx: 0, name: "January" },
     { idx: 1, name: "February" },
