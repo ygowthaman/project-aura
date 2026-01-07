@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class DispositionRestController {
 
-    @GetMapping("/disposition")
+    @GetMapping("/dispositions")
     public String getAllDisposition() {
         return "All Disposition";
     }
