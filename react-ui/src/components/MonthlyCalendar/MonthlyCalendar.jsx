@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./MonthlyCalendar.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 function MonthlyCalendar({ month, year }) {
   const [show, setShow] = useState(false);
@@ -44,16 +44,15 @@ function MonthlyCalendar({ month, year }) {
           const isPast = day < today;
           if (isPast) {
             return (
-              <span key={idx} className="month-item">
+              <span key={idx} className="month-item past-date btn btn-secondary">
                 {day.getDate()}
               </span>
             );
           } else {
             return (
               <Button
-                className="month-item future-date btn btn-secondary"
-                onClick={handleShow}
-              >
+                className="month-item future-date"
+                onClick={handleShow}>
                 {day.getDate()}
               </Button>
             );
@@ -64,20 +63,17 @@ function MonthlyCalendar({ month, year }) {
         <ButtonGroup aria-label="Basic example">
           <Button
             className="btn btn-link disposition-sad"
-            onClick={handleClose}
-          >
+            onClick={handleClose}>
             <i class="bi bi-emoji-frown-fill"></i>
           </Button>
           <Button
             className="btn btn-link disposition-normal"
-            onClick={handleClose}
-          >
+            onClick={handleClose}>
             <i class="bi bi-emoji-smile-fill"></i>
           </Button>
           <Button
             className="btn btn-link disposition-happy"
-            onClick={handleClose}
-          >
+            onClick={handleClose}>
             <i class="bi bi-emoji-laughing-fill"></i>
           </Button>
         </ButtonGroup>

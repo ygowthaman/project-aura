@@ -1,8 +1,21 @@
+import { useEffect, useState } from "react";
 import MonthlyCalendar from "../MonthlyCalendar/MonthlyCalendar";
 import "./MainContent.css";
 
 function MainContent() {
-  const years = [new Date().getFullYear(), 2026];
+  const [years, setYears] = useState(null);
+  const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch("/api/configuration/years");
+      const yearsJson = await response.json();
+      setYears(yearsJson);
+    };
+
+    fetchData();
+  }, []);
+
   const months = [
     { idx: 0, name: "January" },
     { idx: 1, name: "February" },
@@ -18,21 +31,29 @@ function MainContent() {
     { idx: 11, name: "December" },
   ];
 
+  const handleYearClick = (year) => {
+    setSelectedYear(year);
+  };
+
   return (
     <div className="container">
-      <div className="row justify-content-start">
-        {years.map((year) => (
-          <div className="col-4">
-            <button type="button" className="btn btn-primary col col-lg-2">
-              {year}
-            </button>
-          </div>
-        ))}
+      <div className="d-flex gap-3">
+        {years &&
+          years.map((year) => (
+            <div key={year}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => handleYearClick(year)}>
+                {year}
+              </button>
+            </div>
+          ))}
       </div>
       <div className="year-grid-container">
         {months.map((month) => (
           <div className="year-item">
-            <MonthlyCalendar month={month} year={years[0]} />
+            <MonthlyCalendar month={month} year={selectedYear} />
           </div>
         ))}
       </div>

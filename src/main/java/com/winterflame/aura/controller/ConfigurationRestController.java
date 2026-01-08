@@ -4,12 +4,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api")
-public class DispositionRestController {
+import java.util.List;
 
-    @GetMapping("/disposition")
-    public String getAllDisposition() {
-        return "All Disposition";
+@RestController
+@RequestMapping("/api/configuration")
+public class ConfigurationRestController {
+
+    @GetMapping("/years")
+    public List<Integer> getYears() {
+        return List.of(2024, 2025, 2026);
     }
 }
