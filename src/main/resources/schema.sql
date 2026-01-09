@@ -46,3 +46,17 @@ CREATE TABLE `vibe` (
   CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_panorama` FOREIGN KEY (`panoramic_id`) REFERENCES `panorama` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Insert sample data
+--
+
+INSERT INTO `user` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`) 
+VALUES ('johndoe', 'password123', 'John', 'Doe', 'JD', 'john.doe@example.com');
+
+INSERT INTO `panorama` (`overview`) VALUES 
+('Great'),
+('Good'),
+('Meh'),
+('Bad'),
+('Ugly');
