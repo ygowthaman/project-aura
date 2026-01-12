@@ -6,12 +6,12 @@ public class VibeRequestDTO {
 
     private LocalDateTime date;
     private int userId;
-    private int panoramaId;
+    private int ratingId;
 
-    public VibeRequestDTO(LocalDateTime date, int userId, int panoramaId) {
+    public VibeRequestDTO(LocalDateTime date, int userId, int ratingId) {
         this.date = date;
         this.userId = userId;
-        this.panoramaId = panoramaId;
+        this.ratingId = ratingId;
     }
 
     public LocalDateTime getDate() {
@@ -22,7 +22,7 @@ public class VibeRequestDTO {
         return this.userId;
     }
 
-    public int getPanoramaId() {
-        return this.panoramaId;
+    public int getRatingId() {
+        return this.ratingId;
     }
 }

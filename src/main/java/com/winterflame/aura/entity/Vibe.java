@@ -24,8 +24,8 @@ public class Vibe {
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "panoramic_id", nullable = false)
-    private Panorama panorama;
+    @JoinColumn(name = "rank_id", nullable = false)
+    private Rating rating;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
@@ -34,9 +34,9 @@ public class Vibe {
     public Vibe() {
     }
 
-    public Vibe(LocalDateTime date, Panorama panorama, User user) {
+    public Vibe(LocalDateTime date, Rating rating, User user) {
         this.date = date;
-        this.panorama = panorama;
+        this.rating = rating;
         this.user = user;
     }
 
@@ -56,12 +56,12 @@ public class Vibe {
         this.date = date;
     }
 
-    public Panorama getPanorama() {
-        return panorama;
+    public Rating getRating() {
+        return rating;
     }
 
-    public void setPanorama(Panorama panorama) {
-        this.panorama = panorama;
+    public void setRating(Rating rating) {
+        this.rating = rating;
     }
 
     public User getUser() {
@@ -77,7 +77,7 @@ public class Vibe {
         return "Vibe{" +
                 "id=" + id +
                 ", date=" + date +
-                ", panoramaId=" + (panorama != null ? panorama.getId() : null) +
+                ", ratingId=" + (rating != null ? rating.getId() : null) +
                 ", userId=" + (user != null ? user.getId() : null) +
                 '}';
     }

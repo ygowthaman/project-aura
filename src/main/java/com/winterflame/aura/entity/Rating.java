@@ -1,6 +1,5 @@
 package com.winterflame.aura.entity;
 
-import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -9,11 +8,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "panorama")
-public class Panorama {
+@Table(name = "rating")
+public class Rating {
 
     @Id
-    @Nonnull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     public int id;
@@ -21,11 +19,15 @@ public class Panorama {
     @Column(name = "overview")
     public String overview;
 
-    public Panorama() {
+    @Column(name = "rating_order")
+    public int ratingOrder;
+
+    public Rating() {
     }
 
-    public Panorama(String overview) {
+    public Rating(String overview, int ratingOrder) {
         this.overview = overview;
+        this.ratingOrder = ratingOrder;
     }
 
     public int getId() {
@@ -44,11 +46,20 @@ public class Panorama {
         this.overview = overview;
     }
 
+    public int getRankOrder() {
+        return this.ratingOrder;
+    }
+
+    public void setRankOrder(int rankOrder) {
+        this.ratingOrder = rankOrder;
+    }
+
     @Override
     public String toString() {
-        return "Panorama{" +
+        return "Rank{" +
                 "id=" + id +
                 ", overview='" + overview + '\'' +
+                ", ratingOrder='" + ratingOrder + '\'' +
                 '}';
     }
 }
