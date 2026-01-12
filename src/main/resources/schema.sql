@@ -3,13 +3,13 @@ USE `vibe_tracker`;
 
 DROP TABLE IF EXISTS `vibe`;
 DROP TABLE IF EXISTS `rating`;
-DROP TABLE IF EXISTS `user`;
+DROP TABLE IF EXISTS `person`;
 
 --
 -- Table structure for table `user`
 --
 
-CREATE TABLE `user` (
+CREATE TABLE `person` (
     `id` int NOT NULL AUTO_INCREMENT,
     `username` varchar(50) NOT NULL,
     `password` varchar(255) NOT NULL,
@@ -44,7 +44,7 @@ CREATE TABLE `vibe` (
     PRIMARY KEY (`id`),
     KEY `fk_user_idx` (`user_id`),
     KEY `fk_rating_idx` (`rating_id`),
-    CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `person` (`id`) ON DELETE CASCADE,
     CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `rating` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
@@ -52,7 +52,7 @@ CREATE TABLE `vibe` (
 -- Insert sample data
 --
 
-INSERT INTO `user` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`)
+INSERT INTO `person` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`)
 VALUES ('johndoe', 'password123', 'John', 'Doe', 'JD', 'john.doe@example.com');
 
 INSERT INTO `rating` (`overview`, `rating_order`) VALUES
