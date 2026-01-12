@@ -48,6 +48,6 @@ public class RatingRepository implements RatingDAO {
 
     @Override
     public List<Rating> getAll() {
-        return entityManager.createQuery("FROM Rating ", Rating.class).getResultList();
+        return entityManager.createQuery("FROM Rating ORDER BY ratingOrder ASC", Rating.class).getResultList();
     }
 }

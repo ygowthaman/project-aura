@@ -24,7 +24,7 @@ public class Vibe {
     private LocalDateTime date;
 
     @ManyToOne
-    @JoinColumn(name = "rank_id", nullable = false)
+    @JoinColumn(name = "rating_id", nullable = false)
     private Rating rating;
 
     @ManyToOne

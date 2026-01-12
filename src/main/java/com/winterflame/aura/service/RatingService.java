@@ -31,12 +31,12 @@ public class RatingService {
     }
 
     @Transactional
-    public void deleteRating(int rankId) {
-        ratingRepository.delete(rankId);
+    public void deleteRating(int ratingId) {
+        ratingRepository.delete(ratingId);
     }
 
-    public Rating getRating(int rankId) {
-        return ratingRepository.getById(rankId);
+    public Rating getRating(int ratingId) {
+        return ratingRepository.getById(ratingId);
     }
 
     public List<Rating> getAllRatings() {

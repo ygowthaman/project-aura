@@ -46,17 +46,17 @@ public class Rating {
         this.overview = overview;
     }
 
-    public int getRankOrder() {
+    public int getRatingOrder() {
         return this.ratingOrder;
     }
 
-    public void setRankOrder(int rankOrder) {
-        this.ratingOrder = rankOrder;
+    public void setRatingOrder(int ratingOrder) {
+        this.ratingOrder = ratingOrder;
     }
 
     @Override
     public String toString() {
-        return "Rank{" +
+        return "Rating{" +
                 "id=" + id +
                 ", overview='" + overview + '\'' +
                 ", ratingOrder='" + ratingOrder + '\'' +
