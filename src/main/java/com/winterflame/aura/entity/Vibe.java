@@ -1,6 +1,6 @@
 package com.winterflame.aura.entity;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -21,7 +21,7 @@ public class Vibe {
     private int id;
 
     @Column(name = "date")
-    private LocalDateTime date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "rating_id", nullable = false)
@@ -34,7 +34,7 @@ public class Vibe {
     public Vibe() {
     }
 
-    public Vibe(LocalDateTime date, Rating rating, User user) {
+    public Vibe(LocalDate date, Rating rating, User user) {
         this.date = date;
         this.rating = rating;
         this.user = user;
@@ -48,11 +48,11 @@ public class Vibe {
         this.id = id;
     }
 
-    public LocalDateTime getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 

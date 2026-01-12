@@ -2,6 +2,9 @@ package com.winterflame.aura.service;
 
 import com.winterflame.aura.entity.Rating;
 import com.winterflame.aura.repository.RatingRepository;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,10 +22,10 @@ public class VibeService {
     private final VibeRepository vibeRepository;
     private final UserRepository userRepository;
     private final RatingRepository ratingRepository;
-    // private final VibeRepository vibeRepository;
 
     @Autowired
-    public VibeService(VibeRepository vibeRepository, UserRepository userRepository, RatingRepository ratingRepository) {
+    public VibeService(VibeRepository vibeRepository, UserRepository userRepository,
+            RatingRepository ratingRepository) {
         this.vibeRepository = vibeRepository;
         this.userRepository = userRepository;
         this.ratingRepository = ratingRepository;
@@ -30,15 +33,26 @@ public class VibeService {
 
     @Transactional
     public int saveVibe(VibeRequestDTO vibeRequest) {
-
         User user = userRepository.getById(vibeRequest.getUserId());
         Rating rating = ratingRepository.getById(vibeRequest.getRatingId());
+        Vibe vibe = vibeRepository.getByDateAndUser(vibeRequest.getDate(), user);
 
-        Vibe vibe = new Vibe();
+        if (vibe == null) {
+            vibe = new Vibe();
+        }
         vibe.setUser(user);
         vibe.setDate(vibeRequest.getDate());
         vibe.setRating(rating);
-        return vibeRepository.save(vibe);
+
+        if (vibe.getId() == 0) {
+            return vibeRepository.save(vibe);
+        } else {
+            return vibeRepository.update(vibe);
+        }
+    }
+
+    public List<Vibe> getVibes() {
+        return vibeRepository.getAll();
     }
 
 }

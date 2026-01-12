@@ -1,28 +1,29 @@
 package com.winterflame.aura.dto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class VibeRequestDTO {
 
-    private LocalDateTime date;
-    private int userId;
-    private int ratingId;
+    private final LocalDateTime dateTime;
+    private final int userId;
+    private final int ratingId;
 
-    public VibeRequestDTO(LocalDateTime date, int userId, int ratingId) {
-        this.date = date;
+    public VibeRequestDTO(LocalDateTime dateTime, int userId, int ratingId) {
+        this.dateTime = dateTime;
         this.userId = userId;
         this.ratingId = ratingId;
     }
 
-    public LocalDateTime getDate() {
-        return this.date;
+    public LocalDate getDate() {
+        return dateTime.toLocalDate();
     }
 
     public int getUserId() {
-        return this.userId;
+        return userId;
     }
 
     public int getRatingId() {
-        return this.ratingId;
+        return ratingId;
     }
 }

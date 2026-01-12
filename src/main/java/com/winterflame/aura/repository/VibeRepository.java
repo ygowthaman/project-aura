@@ -1,13 +1,16 @@
 package com.winterflame.aura.repository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.winterflame.aura.entity.User;
 import com.winterflame.aura.entity.Vibe;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
 
 @Repository
@@ -49,5 +52,15 @@ public class VibeRepository implements VibeDAO {
     @Override
     public List<Vibe> getAll() {
         return entityManager.createQuery("FROM Vibe", Vibe.class).getResultList();
+    }
+
+    @Override
+    public Vibe getByDateAndUser(LocalDate date, User user) {
+        TypedQuery<Vibe> query = entityManager.createQuery("From Vibe WHERE date=:date AND user=:user", Vibe.class);
+        query.setParameter("date", date);
+        query.setParameter("user", user);
+        query.setMaxResults(1);
+        List<Vibe> results = query.getResultList();
+        return results.isEmpty() ? null : results.get(0);
     }
 }
