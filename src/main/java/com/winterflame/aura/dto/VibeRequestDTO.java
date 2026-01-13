@@ -1,7 +1,6 @@
 package com.winterflame.aura.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
@@ -10,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public class VibeRequestDTO {
 
     @NotNull
-    private LocalDateTime dateTime;
+    private LocalDate date;
 
     @NotNull
     private int userId;
@@ -29,10 +28,10 @@ public class VibeRequestDTO {
     public VibeRequestDTO() {
     }
 
-    public VibeRequestDTO(LocalDateTime dateTime, int userId, int ratingId, Boolean hasNotes,
+    public VibeRequestDTO(LocalDate date, int userId, int ratingId, Boolean hasNotes,
                           Integer mentalRating, Integer physicalRating, String mentalHealthNotes,
                           String physicalHealthNotes, String wins, String setbacks) {
-        this.dateTime = dateTime;
+        this.date = date;
         this.userId = userId;
         this.ratingId = ratingId;
         this.hasNotes = hasNotes;
@@ -45,15 +44,11 @@ public class VibeRequestDTO {
     }
 
     public LocalDate getDate() {
-        return dateTime.toLocalDate();
+        return date;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
-    }
-
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public int getUserId() {

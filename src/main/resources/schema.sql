@@ -1,10 +1,10 @@
 CREATE DATABASE IF NOT EXISTS `vibe_tracker`;
 USE `vibe_tracker`;
 
+DROP TABLE IF EXISTS `day_health`;
 DROP TABLE IF EXISTS `vibe`;
 DROP TABLE IF EXISTS `rating`;
 DROP TABLE IF EXISTS `person`;
-DROP TABLE IF EXISTS `day_health`;
 
 --
 -- Table structure for table `user`
@@ -39,14 +39,15 @@ CREATE TABLE `rating` (
 
 CREATE TABLE `vibe` (
     `vibe_id` int NOT NULL AUTO_INCREMENT,
-    `date` datetime DEFAULT NULL,
+    `date` date DEFAULT NULL,
     `rating_id` int NOT NULL,
     `user_id` int NOT NULL,
     PRIMARY KEY (`vibe_id`),
     KEY `fk_user_idx` (`user_id`),
     KEY `fk_rating_idx` (`rating_id`),
+    UNIQUE KEY `date_unique` (`date`)
     CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `person` (`user_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `rating` (`rating_id`) ON DELETE CASCADE
+    CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `rating` (`rating_id`) ON DELETE CASCADE,
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 --
