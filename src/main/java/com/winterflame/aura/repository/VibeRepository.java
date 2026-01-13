@@ -70,8 +70,10 @@ public class VibeRepository implements VibeDAO {
     }
 
     @Override
-    public List<Vibe> getAll() {
-        return entityManager.createQuery("FROM Vibe", Vibe.class).getResultList();
+    public List<Vibe> getAll(User user) {
+        TypedQuery<Vibe> query = entityManager.createQuery("FROM Vibe WHERE user = :user ORDER BY date", Vibe.class);
+        query.setParameter("user", user);
+        return query.getResultList();
     }
 
     @Override

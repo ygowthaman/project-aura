@@ -26,8 +26,8 @@ public class VibeRestController {
     }
 
     @GetMapping()
-    public List<Vibe> getVibes() {
-        return vibeService.getVibes();
+    public List<Vibe> getVibes(@RequestParam int userId) {
+        return vibeService.getVibes(userId);
     }
 
     @GetMapping("/month")

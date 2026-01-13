@@ -14,7 +14,7 @@ public interface VibeDAO {
 
     void delete(int vibeId);
 
-    List<Vibe> getAll();
+    List<Vibe> getAll(User user);
 
     Vibe getById(int vibeId);
 

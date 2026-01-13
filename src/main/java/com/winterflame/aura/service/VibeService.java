@@ -116,8 +116,9 @@ public class VibeService {
         return dayHealth;
     }
 
-    public List<Vibe> getVibes() {
-        return vibeRepository.getAll();
+    public List<Vibe> getVibes(int userId) {
+        User user = userRepository.getById(userId);
+        return vibeRepository.getAll(user);
     }
 
     public List<Vibe> getVibesForYearByUser(int year, int userId) {
