@@ -3,12 +3,22 @@ package com.winterflame.aura.dto;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.NotNull;
+
+@JsonInclude(JsonInclude.Include.NOT_NULL)
 public class VibeRequestDTO {
 
+    @NotNull
     private LocalDateTime dateTime;
+
+    @NotNull
     private int userId;
+
+    @NotNull
     private int ratingId;
-    private boolean hasNotes;
+
+    private Boolean hasNotes;
     private Integer mentalRating;
     private Integer physicalRating;
     private String mentalHealthNotes;
