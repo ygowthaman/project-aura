@@ -13,8 +13,8 @@ public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public int id;
+    @Column(name = "rating_id")
+    public int ratingId;
 
     @Column(name = "overview")
     public String overview;
@@ -30,12 +30,12 @@ public class Rating {
         this.ratingOrder = ratingOrder;
     }
 
-    public int getId() {
-        return this.id;
+    public int getRatingId() {
+        return this.ratingId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setRatingId(int ratingId) {
+        this.ratingId = ratingId;
     }
 
     public String getOverview() {
@@ -57,7 +57,7 @@ public class Rating {
     @Override
     public String toString() {
         return "Rating{" +
-                "id=" + id +
+                "ratingId=" + ratingId +
                 ", overview='" + overview + '\'' +
                 ", ratingOrder='" + ratingOrder + '\'' +
                 '}';

@@ -16,8 +16,8 @@ public class User {
     @Id
     @Nonnull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "user_id")
+    private int userId;
 
     @Nonnull
     @Column(name = "username")
@@ -54,12 +54,12 @@ public class User {
         this.email = email;
     }
 
-    public int getId() {
-        return id;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setUserId(int id) {
+        this.userId = id;
     }
 
     public String getUsername() {
@@ -113,7 +113,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "userId=" + userId +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstname='" + firstname + '\'' +

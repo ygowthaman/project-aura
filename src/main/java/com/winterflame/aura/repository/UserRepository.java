@@ -24,14 +24,14 @@ public class UserRepository implements UserDAO {
     @Transactional
     public int save(User user) {
         entityManager.persist(user);
-        return user.getId();
+        return user.getUserId();
     }
 
     @Override
     @Transactional
     public int update(User user) {
         entityManager.merge(user);
-        return user.getId();
+        return user.getUserId();
     }
 
     @Override

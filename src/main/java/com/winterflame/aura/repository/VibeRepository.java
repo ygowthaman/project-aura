@@ -27,20 +27,40 @@ public class VibeRepository implements VibeDAO {
     @Transactional
     public int save(Vibe vibe) {
         entityManager.persist(vibe);
-        return vibe.getId();
+        if (vibe.isHasNotes() && vibe.getDayHealth() != null) {
+            vibe.getDayHealth().vibe = vibe;
+            entityManager.persist(vibe.getDayHealth());
+        }
+        return vibe.getVibeId();
     }
 
     @Override
     @Transactional
     public int update(Vibe vibe) {
         entityManager.merge(vibe);
-        return vibe.getId();
+
+        if (vibe.isHasNotes() && vibe.getDayHealth() != null) {
+            vibe.getDayHealth().vibe = vibe;
+            if (vibe.getDayHealth().healthEntryId == 0) {
+                entityManager.persist(vibe.getDayHealth());
+            } else {
+                entityManager.merge(vibe.getDayHealth());
+            }
+        }
+
+        return vibe.getVibeId();
     }
 
     @Override
     @Transactional
     public void delete(int vibeId) {
         Vibe vibe = entityManager.find(Vibe.class, vibeId);
+
+        // Delete associated DayHealth entries first
+        entityManager.createQuery("DELETE FROM DayHealth WHERE vibe.vibeId = :vibeId")
+                .setParameter("vibeId", vibeId)
+                .executeUpdate();
+
         entityManager.remove(vibe);
     }
 

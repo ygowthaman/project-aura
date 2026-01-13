@@ -1,5 +1,6 @@
 package com.winterflame.aura.service;
 
+import com.winterflame.aura.entity.DayHealth;
 import com.winterflame.aura.entity.Rating;
 import com.winterflame.aura.repository.RatingRepository;
 
@@ -33,22 +34,85 @@ public class VibeService {
 
     @Transactional
     public int saveVibe(VibeRequestDTO vibeRequest) {
+        // Fetch required entities with null checks
         User user = userRepository.getById(vibeRequest.getUserId());
-        Rating rating = ratingRepository.getById(vibeRequest.getRatingId());
-        Vibe vibe = vibeRepository.getByDateAndUser(vibeRequest.getDate(), user);
-
-        if (vibe == null) {
-            vibe = new Vibe();
+        if (user == null) {
+            throw new IllegalArgumentException("User not found with id: " + vibeRequest.getUserId());
         }
-        vibe.setUser(user);
+
+        Rating rating = ratingRepository.getById(vibeRequest.getRatingId());
+        if (rating == null) {
+            throw new IllegalArgumentException("Rating not found with id: " + vibeRequest.getRatingId());
+        }
+
+        // Check if vibe already exists for this date and user
+        Vibe vibe = vibeRepository.getByDateAndUser(vibeRequest.getDate(), user);
+        boolean isNewVibe = (vibe == null);
+
+        if (isNewVibe) {
+            vibe = new Vibe();
+            vibe.setUser(user);
+        }
+
+        // Update vibe properties
         vibe.setDate(vibeRequest.getDate());
         vibe.setRating(rating);
+        vibe.setHasNotes(vibeRequest.getHasNotes());
 
-        if (vibe.getId() == 0) {
-            return vibeRepository.save(vibe);
+        // Handle dayHealth if notes are present
+        if (vibeRequest.getHasNotes()) {
+            DayHealth dayHealth = buildDayHealth(vibeRequest, vibe);
+            vibe.setDayHealth(dayHealth);
         } else {
-            return vibeRepository.update(vibe);
+            vibe.setDayHealth(null);
         }
+
+        // Save or update
+        return isNewVibe ? vibeRepository.save(vibe) : vibeRepository.update(vibe);
+    }
+
+    private DayHealth buildDayHealth(VibeRequestDTO vibeRequest, Vibe existingVibe) {
+        // Get existing dayHealth if updating, otherwise create new
+        DayHealth dayHealth = (existingVibe != null && existingVibe.getDayHealth() != null)
+            ? existingVibe.getDayHealth()
+            : new DayHealth();
+
+        // Set mental rating if provided
+        if (vibeRequest.getMentalRating() != null && vibeRequest.getMentalRating() > 0) {
+            Rating mentalRating = ratingRepository.getById(vibeRequest.getMentalRating());
+            if (mentalRating == null) {
+                throw new IllegalArgumentException("Mental rating not found with id: " + vibeRequest.getMentalRating());
+            }
+            dayHealth.setMentalRating(mentalRating);
+        }
+
+        // Set physical rating if provided
+        if (vibeRequest.getPhysicalRating() != null && vibeRequest.getPhysicalRating() > 0) {
+            Rating physicalRating = ratingRepository.getById(vibeRequest.getPhysicalRating());
+            if (physicalRating == null) {
+                throw new IllegalArgumentException("Physical rating not found with id: " + vibeRequest.getPhysicalRating());
+            }
+            dayHealth.setPhysicalRating(physicalRating);
+        }
+
+        // Set text fields if provided (now only need to check for empty)
+        if (!vibeRequest.getMentalHealthNotes().isEmpty()) {
+            dayHealth.setMentalHealthNotes(vibeRequest.getMentalHealthNotes());
+        }
+
+        if (!vibeRequest.getPhysicalHealthNotes().isEmpty()) {
+            dayHealth.setPhysicalHealthNotes(vibeRequest.getPhysicalHealthNotes());
+        }
+
+        if (!vibeRequest.getWins().isEmpty()) {
+            dayHealth.setWins(vibeRequest.getWins());
+        }
+
+        if (!vibeRequest.getSetbacks().isEmpty()) {
+            dayHealth.setSetbacks(vibeRequest.getSetbacks());
+        }
+
+        return dayHealth;
     }
 
     public List<Vibe> getVibes() {

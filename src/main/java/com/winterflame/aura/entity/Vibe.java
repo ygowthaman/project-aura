@@ -2,14 +2,7 @@ package com.winterflame.aura.entity;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "vibe")
@@ -17,8 +10,8 @@ public class Vibe {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private int id;
+    @Column(name = "vibe_id")
+    private int vibeId;
 
     @Column(name = "date")
     private LocalDate date;
@@ -31,6 +24,12 @@ public class Vibe {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Transient
+    private DayHealth dayHealth;
+
+    @Transient
+    private boolean hasNotes;
+
     public Vibe() {
     }
 
@@ -40,12 +39,12 @@ public class Vibe {
         this.user = user;
     }
 
-    public int getId() {
-        return id;
+    public int getVibeId() {
+        return vibeId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setVibeId(int id) {
+        this.vibeId = id;
     }
 
     public LocalDate getDate() {
@@ -72,13 +71,29 @@ public class Vibe {
         this.user = user;
     }
 
+    public DayHealth getDayHealth() {
+        return dayHealth;
+    }
+
+    public void setDayHealth(DayHealth dayHealth) {
+        this.dayHealth = dayHealth;
+    }
+
+    public boolean isHasNotes() {
+        return hasNotes;
+    }
+
+    public void setHasNotes(boolean hasNotes) {
+        this.hasNotes = hasNotes;
+    }
+
     @Override
     public String toString() {
         return "Vibe{" +
-                "id=" + id +
+                "vibeId=" + vibeId +
                 ", date=" + date +
-                ", ratingId=" + (rating != null ? rating.getId() : null) +
-                ", userId=" + (user != null ? user.getId() : null) +
+                ", ratingId=" + (rating != null ? rating.getRatingId() : null) +
+                ", userId=" + (user != null ? user.getUserId() : null) +
                 '}';
     }
 

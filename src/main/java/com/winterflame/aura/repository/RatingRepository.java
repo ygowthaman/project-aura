@@ -24,14 +24,14 @@ public class RatingRepository implements RatingDAO {
     @Transactional
     public int save(Rating rating) {
         entityManager.persist(rating);
-        return rating.getId();
+        return rating.getRatingId();
     }
 
     @Override
     @Transactional
     public int update(Rating rating) {
         entityManager.merge(rating);
-        return rating.getId();
+        return rating.getRatingId();
     }
 
     @Override
