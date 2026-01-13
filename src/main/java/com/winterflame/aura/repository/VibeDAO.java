@@ -18,5 +18,9 @@ public interface VibeDAO {
 
     Vibe getById(int vibeId);
 
-    Vibe getByDateAndUser(LocalDate date, User user);
+    Vibe getByDateForUser(LocalDate date, User user);
+
+    List<Vibe> getVibesForMonthByUser(int month, int year, User user);
+
+    List<Vibe> getVibesForYearByUser(int year, User user);
 }

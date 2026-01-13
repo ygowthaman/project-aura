@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.NotNull;
 
-@JsonInclude(JsonInclude.Include.NOT_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class VibeRequestDTO {
 
     @NotNull
@@ -29,7 +29,7 @@ public class VibeRequestDTO {
     public VibeRequestDTO() {
     }
 
-    public VibeRequestDTO(LocalDateTime dateTime, int userId, int ratingId, boolean hasNotes,
+    public VibeRequestDTO(LocalDateTime dateTime, int userId, int ratingId, Boolean hasNotes,
                           Integer mentalRating, Integer physicalRating, String mentalHealthNotes,
                           String physicalHealthNotes, String wins, String setbacks) {
         this.dateTime = dateTime;
@@ -72,11 +72,11 @@ public class VibeRequestDTO {
         this.ratingId = ratingId;
     }
 
-    public boolean getHasNotes() {
+    public Boolean getHasNotes() {
         return hasNotes;
     }
 
-    public void setHasNotes(boolean hasNotes) {
+    public void setHasNotes(Boolean hasNotes) {
         this.hasNotes = hasNotes;
     }
 

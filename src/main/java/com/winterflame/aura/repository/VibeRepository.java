@@ -75,12 +75,33 @@ public class VibeRepository implements VibeDAO {
     }
 
     @Override
-    public Vibe getByDateAndUser(LocalDate date, User user) {
+    public Vibe getByDateForUser(LocalDate date, User user) {
         TypedQuery<Vibe> query = entityManager.createQuery("From Vibe WHERE date=:date AND user=:user", Vibe.class);
         query.setParameter("date", date);
         query.setParameter("user", user);
         query.setMaxResults(1);
         List<Vibe> results = query.getResultList();
         return results.isEmpty() ? null : results.get(0);
+    }
+
+    @Override
+    public List<Vibe> getVibesForMonthByUser(int month, int year, User user) {
+        TypedQuery<Vibe> query = entityManager.createQuery(
+                "FROM Vibe WHERE MONTH(date) = :month AND YEAR(date) = :year AND user = :user ORDER BY date",
+                Vibe.class);
+        query.setParameter("month", month);
+        query.setParameter("year", year);
+        query.setParameter("user", user);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Vibe> getVibesForYearByUser(int year, User user) {
+        TypedQuery<Vibe> query = entityManager.createQuery(
+                "FROM Vibe WHERE YEAR(date) = :year AND user = :user ORDER BY date",
+                Vibe.class);
+        query.setParameter("year", year);
+        query.setParameter("user", user);
+        return query.getResultList();
     }
 }

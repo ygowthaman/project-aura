@@ -46,7 +46,7 @@ public class VibeService {
         }
 
         // Check if vibe already exists for this date and user
-        Vibe vibe = vibeRepository.getByDateAndUser(vibeRequest.getDate(), user);
+        Vibe vibe = vibeRepository.getByDateForUser(vibeRequest.getDate(), user);
         boolean isNewVibe = (vibe == null);
 
         if (isNewVibe) {
@@ -57,10 +57,10 @@ public class VibeService {
         // Update vibe properties
         vibe.setDate(vibeRequest.getDate());
         vibe.setRating(rating);
-        vibe.setHasNotes(vibeRequest.getHasNotes());
+        vibe.setHasNotes(Boolean.TRUE.equals(vibeRequest.getHasNotes()));
 
         // Handle dayHealth if notes are present
-        if (vibeRequest.getHasNotes()) {
+        if (Boolean.TRUE.equals(vibeRequest.getHasNotes())) {
             DayHealth dayHealth = buildDayHealth(vibeRequest, vibe);
             vibe.setDayHealth(dayHealth);
         } else {
@@ -74,8 +74,8 @@ public class VibeService {
     private DayHealth buildDayHealth(VibeRequestDTO vibeRequest, Vibe existingVibe) {
         // Get existing dayHealth if updating, otherwise create new
         DayHealth dayHealth = (existingVibe != null && existingVibe.getDayHealth() != null)
-            ? existingVibe.getDayHealth()
-            : new DayHealth();
+                ? existingVibe.getDayHealth()
+                : new DayHealth();
 
         // Set mental rating if provided
         if (vibeRequest.getMentalRating() != null && vibeRequest.getMentalRating() > 0) {
@@ -90,7 +90,8 @@ public class VibeService {
         if (vibeRequest.getPhysicalRating() != null && vibeRequest.getPhysicalRating() > 0) {
             Rating physicalRating = ratingRepository.getById(vibeRequest.getPhysicalRating());
             if (physicalRating == null) {
-                throw new IllegalArgumentException("Physical rating not found with id: " + vibeRequest.getPhysicalRating());
+                throw new IllegalArgumentException(
+                        "Physical rating not found with id: " + vibeRequest.getPhysicalRating());
             }
             dayHealth.setPhysicalRating(physicalRating);
         }
@@ -117,6 +118,16 @@ public class VibeService {
 
     public List<Vibe> getVibes() {
         return vibeRepository.getAll();
+    }
+
+    public List<Vibe> getVibesForYearByUser(int year, int userId) {
+        User user = userRepository.getById(userId);
+        return vibeRepository.getVibesForYearByUser(year, user);
+    }
+
+    public List<Vibe> getVibesForMonthByUser(int year, int month, int userId) {
+        User user = userRepository.getById(userId);
+        return vibeRepository.getVibesForMonthByUser(month, year, user);
     }
 
 }
