@@ -1,5 +1,6 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import { Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header.jsx';
 import MainContent from './components/MainContent/MainContent.jsx';
 
@@ -10,7 +11,10 @@ function App() {
         <Header />
       </header>
       <section>
-        <MainContent />
+        <Routes>
+          <Route path="/" element={<MainContent />} />
+          {/* Add more routes here */}
+        </Routes>
       </section>
     </div>
   );

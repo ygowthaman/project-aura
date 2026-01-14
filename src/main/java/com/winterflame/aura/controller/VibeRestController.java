@@ -15,7 +15,7 @@ import com.winterflame.aura.entity.Vibe;
 import com.winterflame.aura.service.VibeService;
 
 @RestController
-@RequestMapping("/api/vibe")
+@RequestMapping("/api/vibes")
 public class VibeRestController {
 
     private final VibeService vibeService;

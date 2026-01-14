@@ -39,7 +39,7 @@ CREATE TABLE `rating` (
 
 CREATE TABLE `vibe` (
     `vibe_id` int NOT NULL AUTO_INCREMENT,
-    `date` date DEFAULT NULL,
+    `date` date NOT NULL,
     `rating_id` int NOT NULL,
     `user_id` int NOT NULL,
     PRIMARY KEY (`vibe_id`),
