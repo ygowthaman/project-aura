@@ -93,6 +93,7 @@ CREATE TABLE `pulse` (
     KEY `fk_rating_idx` (`rating_id`),
     KEY `fk_mental_rating_idx` (`mental_rating_id`),
     KEY `fk_physical_rating_idx` (`physical_rating_id`),
+    UNIQUE KEY `user_date_unique` (`pulse_date`, `user_id`),
     CONSTRAINT `fk_person` FOREIGN KEY (`user_id`) REFERENCES `persons` (user_id) ON DELETE CASCADE,
     CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE,
     CONSTRAINT `fk_mental_rating` FOREIGN KEY (`mental_rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE,
@@ -104,7 +105,7 @@ CREATE TABLE `pulse` (
 --
 
 INSERT INTO `persons` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`)
-VALUES ('johndoe', 'password123', 'John', 'Doe', 'JD', 'john.doe@example.com');
+VALUES ('aurauser', 'password', 'Aura', 'User', 'aur', 'aura.user@aura.com');
 
 INSERT INTO `ratings` (`overview`, `rating_order`) VALUES
     ('Great', 1),
