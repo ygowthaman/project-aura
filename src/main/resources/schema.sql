@@ -3,14 +3,15 @@ USE `vibe_tracker`;
 
 DROP TABLE IF EXISTS `day_health`;
 DROP TABLE IF EXISTS `vibe`;
-DROP TABLE IF EXISTS `rating`;
-DROP TABLE IF EXISTS `person`;
+DROP TABLE IF EXISTS `pulse`;
+DROP TABLE IF EXISTS `ratings`;
+DROP TABLE IF EXISTS `persons`;
 
 --
--- Table structure for table `user`
+-- Table structure for table `persons`
 --
 
-CREATE TABLE `person` (
+CREATE TABLE `persons` (
     `user_id` int NOT NULL AUTO_INCREMENT,
     `username` varchar(50) NOT NULL,
     `password` varchar(255) NOT NULL,
@@ -23,10 +24,10 @@ CREATE TABLE `person` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 --
--- Table structure for table `panorama`
+-- Table structure for table `ratings`
 --
 
-CREATE TABLE `rating` (
+CREATE TABLE `ratings` (
     `rating_id` int NOT NULL AUTO_INCREMENT,
     `overview` text NOT NULL,
     `rating_order` int NOT NULL,
@@ -45,9 +46,9 @@ CREATE TABLE `vibe` (
     PRIMARY KEY (`vibe_id`),
     KEY `fk_user_idx` (`user_id`),
     KEY `fk_rating_idx` (`rating_id`),
-    UNIQUE KEY `date_unique` (`date`)
-    CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `person` (`user_id`) ON DELETE CASCADE,
-    CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `rating` (`rating_id`) ON DELETE CASCADE,
+    UNIQUE KEY `date_unique` (`date`),
+    CONSTRAINT `fk_user` FOREIGN KEY (`user_id`) REFERENCES `persons` (`user_id`) ON DELETE CASCADE,
+    CONSTRAINT `fk_ratings` FOREIGN KEY (`rating_id`) REFERENCES `ratings` (`rating_id`) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 --
@@ -68,18 +69,44 @@ CREATE TABLE `day_health` (
     KEY `fk_mental_rating_idx` (`mental_rating_id`),
     KEY `fk_physical_rating_idx` (`physical_rating_id`),
     CONSTRAINT `fk_vibe` FOREIGN KEY (`vibe_id`) REFERENCES `vibe` (vibe_id) ON DELETE CASCADE,
-    CONSTRAINT `fk_mental_rating` FOREIGN KEY (`mental_rating_id`) REFERENCES `rating` (rating_id) ON DELETE CASCADE,
-    CONSTRAINT `fk_physical_rating` FOREIGN KEY (`physical_rating_id`) REFERENCES `rating` (rating_id) ON DELETE CASCADE
+    CONSTRAINT `fk_mental_ratings` FOREIGN KEY (`mental_rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_physical_ratings` FOREIGN KEY (`physical_rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Table structure for table `pulse`
+--
+
+CREATE TABLE `pulse` (
+	`pulse_id` int NOT NULL AUTO_INCREMENT,
+    `pulse_date` date NOT NULL,
+    `rating_id` int NOT NULL,
+    `user_id` int NOT NULL,
+    `mental_rating_id` int DEFAULT NULL,
+    `physical_rating_id` int DEFAULT NULL,
+    `mental_rating_notes` text DEFAULT NULL,
+    `physical_rating_notes` text DEFAULT NULL,
+    `triumphs` text DEFAULT NULL,
+    `setbacks` text DEFAULT NULL,
+    PRIMARY KEY (`pulse_id`),
+    KEY `fk_person_idx` (`user_id`),
+    KEY `fk_rating_idx` (`rating_id`),
+    KEY `fk_mental_rating_idx` (`mental_rating_id`),
+    KEY `fk_physical_rating_idx` (`physical_rating_id`),
+    CONSTRAINT `fk_person` FOREIGN KEY (`user_id`) REFERENCES `persons` (user_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_rating` FOREIGN KEY (`rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_mental_rating` FOREIGN KEY (`mental_rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE,
+    CONSTRAINT `fk_physical_rating` FOREIGN KEY (`physical_rating_id`) REFERENCES `ratings` (rating_id) ON DELETE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Insert sample data
 --
 
-INSERT INTO `person` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`)
+INSERT INTO `persons` (`username`, `password`, `firstname`, `lastname`, `nickname`, `email`)
 VALUES ('johndoe', 'password123', 'John', 'Doe', 'JD', 'john.doe@example.com');
 
-INSERT INTO `rating` (`overview`, `rating_order`) VALUES
+INSERT INTO `ratings` (`overview`, `rating_order`) VALUES
     ('Great', 1),
     ('Good', 2),
     ('Meh', 3),
